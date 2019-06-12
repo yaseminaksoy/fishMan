@@ -20,46 +20,41 @@ class TargetOne():
         self.rectangle = pygame.rect.Rect(width + int(width / 20) / 2, self.y + int(height / 10) / 2, int(width / 20),
                                           int(height / 10))
 
-        self.flyImageOrder = 0
-        self.flyImages = []
-        self.leftFlyImages = []
+        #self.swimImageOrder = 0
 
-        self.flyImages.append(pygame.transform.scale(pygame.image.load("images/png/Fish/purpleFish.png"),
+        self.swimImage=(pygame.transform.scale(pygame.image.load("images/png/Fish/purpleFish.png"),
                                                      (self.rectangle[2], self.rectangle[3])))
-        self.leftFlyImages.append(pygame.transform.scale(pygame.image.load("images/png/Fish/purpleFishRight.png"),
+        self.leftswimImage=(pygame.transform.scale(pygame.image.load("images/png/Fish/purpleFishRight.png"),
                                                          (self.rectangle[2], self.rectangle[3])))
 
-        self.explosionImageOrder = -1
-        self.explosionImages = []
+        self.explosionImageOrder = False
         self.leftExplosionImages = []
 
-        self.explosionImages.append(pygame.transform.scale(pygame.image.load("images/png/Fish/purpleFish.png"),
+        self.explosionImages=(pygame.transform.scale(pygame.image.load("images/png/Fish/purpleFish.png"),
                                                            (self.rectangle[2] * 4, self.rectangle[2] * 4)))
 
         self.exposed = False
 
     def draw(self, screen,speed):
         self.speed = speed
-        if self.explosionImageOrder == -1:
-            # self.flyImageOrder=(self.flyImageOrder+1)%10
+        if self.explosionImageOrder == False:
             self.rectangle[0] = self.rectangle[0] - self.mx * self.speed
             # self.rectangle[1]=self.rectangle[1]-self.my*2
             # self.rectangle.centerx= self.rectangle.centerx-self.mx*2
-            screen.blit(self.flyImages[self.flyImageOrder],
-                        [self.rectangle[0] - int(self.flyImages[self.flyImageOrder].get_width() / 2),
-                         self.rectangle[1] - int(self.flyImages[self.flyImageOrder].get_height() / 2)])
+            screen.blit(self.swimImage,
+                        [self.rectangle[0] - int(self.swimImage.get_width() / 2),
+                         self.rectangle[1] - int(self.swimImage.get_height() / 2)])
         else:
-            self.explosionImageOrder = (self.explosionImageOrder + 1) % 9
             # self.rectangle[0]=self.rectangle[0]-self.mx*2
             # self.rectangle[1]=self.rectangle[1]-self.my*2
             self.rectangle.centerx = self.rectangle.centerx - self.mx * self.speed
-            if self.explosionImageOrder == 1:
+            if self.explosionImageOrder == True:
                 return True
-            screen.blit(self.explosionImages[self.explosionImageOrder],
-                        [self.rectangle[0] - int(self.explosionImages[self.explosionImageOrder].get_width() / 2),
-                         self.rectangle[1] - int(self.explosionImages[self.explosionImageOrder].get_height() / 2)])
-            if self.explosionImageOrder == 1:
-                self.explosionImageOrder = -1
+            screen.blit(self.explosionImages,
+                        [self.rectangle[0] - int(self.explosionImages.get_width() / 2),
+                         self.rectangle[1] - int(self.explosionImages.get_height() / 2)])
+            if self.explosionImageOrder == True:
+                self.explosionImageOrder = False
         return False
 
     def hit(self):
@@ -70,8 +65,8 @@ class TargetOne():
     def expose(self):
         self.life = 0
         self.exposed = True
-        if self.explosionImageOrder < 0:
-            self.explosionImageOrder = 0
+        if self.explosionImageOrder==False:
+            self.explosionImageOrder = True
 
 
 class TargetOneFromLeft(TargetOne):
@@ -81,13 +76,12 @@ class TargetOneFromLeft(TargetOne):
         self.mx = -1
         width = TargetOne.screen.get_width()
         height = TargetOne.screen.get_height()
-        self.flyImages = []
-        self.flyImages.append(pygame.transform.scale(pygame.image.load("images/png/Fish/purpleFishRight.png"),
+        self.swimImage=(pygame.transform.scale(pygame.image.load("images/png/Fish/purpleFishRight.png"),
                                                      (self.rectangle[2], self.rectangle[3])))
         self.rectangle = pygame.rect.Rect(0 - int(width / 20) / 2, self.y + int(height / 10) / 2, int(width / 20),
                                           int(height / 10))
-        self.ExplosionImages = []
-        self.ExplosionImages.append(pygame.transform.scale(pygame.image.load("images/png/Fish/purpleFishRight.png"),
+
+        self.ExplosionImages=(pygame.transform.scale(pygame.image.load("images/png/Fish/purpleFishRight.png"),
                                                            (self.rectangle[2] * 4, self.rectangle[2] * 4)))
 
 
@@ -98,13 +92,12 @@ class TargetTwoFromLeft(TargetOne):
         self.mx = -1
         width = TargetOne.screen.get_width()
         height = TargetOne.screen.get_height()
-        self.flyImages = []
-        self.flyImages.append(pygame.transform.scale(pygame.image.load("images/png/Fish/babyShark.png"),
+        self.swimImage=(pygame.transform.scale(pygame.image.load("images/png/Fish/babyShark.png"),
                                                      (self.rectangle[2], self.rectangle[3])))
         self.rectangle = pygame.rect.Rect(0 - int(width / 20) / 2, self.y + int(height / 10) / 2, int(width / 20),
                                           int(height / 10))
-        self.ExplosionImages = []
-        self.ExplosionImages.append(pygame.transform.scale(pygame.image.load("images/png/Fish/babyShark.png"),
+
+        self.ExplosionImages=(pygame.transform.scale(pygame.image.load("images/png/Fish/babyShark.png"),
                                                            (self.rectangle[2] * 4, self.rectangle[2] * 4)))
 
 class TargetThreeFromLeft(TargetOne):
@@ -113,35 +106,32 @@ class TargetThreeFromLeft(TargetOne):
         self.mx = -1
         width = TargetOne.screen.get_width()
         height = TargetOne.screen.get_height()
-        self.flyImages = []
-        self.flyImages.append(pygame.transform.scale(pygame.image.load("images/png/Fish/seaHorseFromLeft.png"),
+        self.swimImage=(pygame.transform.scale(pygame.image.load("images/png/Fish/seaHorseFromLeft.png"),
                                                      (self.rectangle[2], self.rectangle[3])))
         self.rectangle = pygame.rect.Rect(0 - int(width / 20) / 2, self.y + int(height / 10) / 2, int(width / 20),
                                           int(height / 10))
-        self.ExplosionImages = []
-        self.ExplosionImages.append(pygame.transform.scale(pygame.image.load("images/png/Fish/seaHorseFromLeft.png"),
+
+        self.ExplosionImages=(pygame.transform.scale(pygame.image.load("images/png/Fish/seaHorseFromLeft.png"),
                                                            (self.rectangle[2] * 4, self.rectangle[2] * 4)))
 
 
 class TargetTwo(TargetOne):
     def __init__(self, TargetOne):
         super().__init__(TargetOne.screen)
-        self.flyImages = []
-        self.flyImages.append(pygame.transform.scale(pygame.image.load("images/png/Fish/yellowFish.png"),(self.rectangle[2], self.rectangle[3])))
+        self.swimImage=(pygame.transform.scale(pygame.image.load("images/png/Fish/yellowFish.png"),(self.rectangle[2], self.rectangle[3])))
 
-        self.ExplosionImages = []
-        self.ExplosionImages.append(pygame.transform.scale(pygame.image.load("images/png/Fish/yellowFish.png"),
+
+        self.ExplosionImages=(pygame.transform.scale(pygame.image.load("images/png/Fish/yellowFish.png"),
                                                            (self.rectangle[2] * 4, self.rectangle[2] * 4)))
 
 
 class TargetThree(TargetOne):
     def __init__(self, TargetOne):
         super().__init__(TargetOne.screen)
-        self.flyImages = []
-        self.flyImages.append(pygame.transform.scale(pygame.image.load("images/png/Fish/seaHorse.png"),(self.rectangle[2], self.rectangle[3])))
+        self.swimImage=(pygame.transform.scale(pygame.image.load("images/png/Fish/seaHorse.png"),(self.rectangle[2], self.rectangle[3])))
 
-        self.ExplosionImages = []
-        self.ExplosionImages.append(pygame.transform.scale(pygame.image.load("images/png/Fish/seaHorse.png"),
+
+        self.ExplosionImages=(pygame.transform.scale(pygame.image.load("images/png/Fish/seaHorse.png"),
                                                            (self.rectangle[2] * 4, self.rectangle[2] * 4)))
 
 
@@ -153,36 +143,34 @@ class Buble(TargetOne):
         self.my = 1
         width = TargetOne.screen.get_width()
         height = TargetOne.screen.get_height()
-        self.flyImages = []
-        self.flyImages.append(pygame.transform.scale(pygame.image.load("images/png/Buble/buble.png"),
+        self.swimImage=(pygame.transform.scale(pygame.image.load("images/png/Buble/buble.png"),
                                                      (self.rectangle[2], self.rectangle[3])))
         self.x = random.randint(0, width)
 
         self.rectangle = pygame.rect.Rect(self.x, -15, int(width / 20),
                                           int(height / 10))
-        self.ExplosionImages = []
+
 
     def draw(self, screen):
-        if self.explosionImageOrder == -1:
-            # self.flyImageOrder=(self.flyImageOrder+1)%10
+        if self.explosionImageOrder == False:
+            # self.swimImageOrder=(self.swimImageOrder+1)%10
             # self.rectangle[0]=self.rectangle[0]-self.mx*2
             self.rectangle[1] = self.rectangle[1] + self.my * 2
             # self.rectangle.centerx= self.rectangle.centerx-self.mx*2
-            screen.blit(self.flyImages[self.flyImageOrder],
-                        [self.rectangle[0] - int(self.flyImages[self.flyImageOrder].get_width() / 2),
-                         self.rectangle[1] - int(self.flyImages[self.flyImageOrder].get_height() / 2)])
+            screen.blit(self.swimImage,
+                        [self.rectangle[0] - int(self.swimImage.get_width() / 2),
+                         self.rectangle[1] - int(self.swimImage.get_height() / 2)])
         else:
-            self.explosionImageOrder = (self.explosionImageOrder + 1) % 9
             # self.rectangle[0]=self.rectangle[0]-self.mx*2
             # self.rectangle[1]=self.rectangle[1]-self.my*2
             self.rectangle.centerx = self.rectangle.centerx - self.mx * 2
-            if self.explosionImageOrder == 1:
+            if self.explosionImageOrder == True:
                 return True
-            screen.blit(self.explosionImages[self.explosionImageOrder],
-                        [self.rectangle[0] - int(self.explosionImages[self.explosionImageOrder].get_width() / 2),
-                         self.rectangle[1] - int(self.explosionImages[self.explosionImageOrder].get_height() / 2)])
-            if self.explosionImageOrder == 1:
-                self.explosionImageOrder = -1
+            screen.blit(self.explosionImages,
+                        [self.rectangle[0] - int(self.explosionImages.get_width() / 2),
+                         self.rectangle[1] - int(self.explosionImages.get_height() / 2)])
+            if self.explosionImageOrder == True:
+                self.explosionImageOrder = False
         return False
 
 
